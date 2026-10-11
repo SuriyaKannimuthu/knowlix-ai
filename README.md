@@ -1,5 +1,7 @@
 # Knowlix AI
 
+> **[Read the Technical Design Document (PDF)](docs/Knowlix-AI-Technical-Design.pdf)**: how Knowlix AI works, explained for everyone, plus the full architecture, data model, retrieval pipeline, security, API reference, testing and roadmap (22 pages).
+
 A retrieval-augmented knowledge assistant. Users upload PDFs, Word documents and notes, then ask questions in plain language. Answers are drawn only from passages the user is allowed to read, cite their sources, and are refused when the documents don't contain enough evidence.
 
 ## Screenshots
