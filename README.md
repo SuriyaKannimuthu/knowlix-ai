@@ -2,6 +2,16 @@
 
 A retrieval-augmented knowledge assistant. Users upload PDFs, Word documents and notes, then ask questions in plain language. Answers are drawn only from passages the user is allowed to read, cite their sources, and are refused when the documents don't contain enough evidence.
 
+## Screenshots
+
+**Landing page:** monochrome design with an animated ASCII hero (documents breaking into chunks that stream into a vector-space globe).
+
+![Knowlix AI landing page](docs/screenshots/landing.png)
+
+**Assistant:** upload documents and calibrate them into the search index, choose the model (Gemini, Claude or OpenAI with your own key), and ask questions answered across all your documents with citations.
+
+![Knowlix AI assistant workspace](docs/screenshots/assistant.png)
+
 | | |
 |---|---|
 | [`backend/`](backend) | Python · FastAPI · Pydantic · async SQLAlchemy (PostgreSQL / SQLite) · Qdrant · FastEmbed · Claude / OpenAI / Gemini |
