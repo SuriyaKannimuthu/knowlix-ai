@@ -1,0 +1,53 @@
+# PostgreSQL + Qdrant + the FastAPI backend.
+#   JWT_SECRET=$(python -c "import secrets; print(secrets.token_urlsafe(48))") docker compose up --build
+# Then run the frontend with NEXT_PUBLIC_API_MODE=live (it proxies /api to :8000).
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: knowlix
+      POSTGRES_PASSWORD: knowlix
+      POSTGRES_DB: knowlix
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U knowlix -d knowlix"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.2
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "6333:6333"
+
+  backend:
+    build: ./backend
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql+asyncpg://knowlix:knowlix@postgres:5432/knowlix
+      QDRANT_URL: http://qdrant:6333
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET to 32+ random characters}
+      CORS_ORIGINS: '["http://localhost:3000"]'
+    volumes:
+      - backend-data:/app/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+
+volumes:
+  postgres-data:
+  qdrant-data:
+  backend-data:

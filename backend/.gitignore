@@ -1,0 +1,10 @@
+# Most rules live in the root .gitignore; these keep the backend safe on its own.
+.venv/
+data/
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
